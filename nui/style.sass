@@ -1,0 +1,129 @@
+@import "colors"
+@import "fonts"
+
+*
+  font-family: $main-font
+  font-weight: 400
+  color: $text-color
+  margin: 0
+  box-sizing: border-box
+
+body
+  width: 100vw
+  height: 100vh
+  margin: 0
+  display: flex
+  text-align: center
+  align-items: center
+  justify-content: center
+
+h1 span 
+  background: linear-gradient(45deg, $accent-color, $secondary-color)
+  background-clip: border-box
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+
+@mixin transition-color($duration:.3s)
+  transition: color $duration ease-in-out
+
+@mixin transition-bg-color($duration:.3s)
+  transition: background-color $duration ease-in-out
+
+@mixin button-style($btn-font, $btn-text-color, $btn-bg-color, $btn-border-color, $btn-bg-hover-color, $btn-hover-text-color, $btn-trans-time)
+  font-family: $btn-font
+  display: inline-block
+  min-width: 150px
+  padding: 0.6rem 1rem
+  margin-top: 1rem
+  color: $btn-text-color
+  text-transform: uppercase
+  font-weight: 600
+  text-align: center
+  position: relative
+  background-color: $btn-bg-color
+  border: 2px solid $btn-border-color
+  border-radius: 10px
+
+  &:hover
+    cursor: pointer
+    color: $btn-hover-text-color
+    background-color: $btn-bg-hover-color
+    @include transition-bg-color(.3s)
+
+@mixin button-hover-style($btn-bg-hover-color)
+  cursor: pointer
+  background-color: $btn-bg-hover-color
+
+.btn-typ1
+  @include button-style($main-font, $text-color, $primary-color, $accent-color, $accent-color, $text-color,  .3s)
+
+.btn-typ2
+  @include button-style($main-font, $background-color, $secondary-color, $secondary-color, $primary-color, $text-color, .3s)
+
+.container
+  padding: 20px
+  width: 550px
+  height: 550px
+  margin-left: auto
+  margin-right: auto
+  background-image: linear-gradient(to bottom, $accent-color 30%, $primary-color)
+  border-radius: 30px
+  // box-shadow: 0px 0px 20px 0px $secondary-color
+  box-shadow: $secondary-color 0px 20px 30px -10px
+  border: 1px solid $accent-color
+  //border: 2px solid $secondary-color
+
+.header
+  height: 15%
+
+.content
+  height: 60%
+  display: flex
+  /* margin: 20px auto 20px auto */
+
+  img
+    margin: auto
+    width: 254px
+    display: block
+
+.footer
+  height: 25%
+
+.inputfield
+  display: flex
+  width: 80%
+  margin: 0px auto 10px auto
+
+.icon
+  padding: 10px
+  border: 1px solid $accent-color
+  background-color: $primary-color
+  height: 40px
+  min-width: 50px
+  /* margin: 0px auto 10px auto */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+  input[type=number]
+    -moz-appearance: textfield
+
+#inpt-blackmoney
+  display: block
+  border: 1px solid $accent-color
+  background-color: $primary-color
+  height: 40px
+  width: 90%
+  text-align: center
+  margin: 0px auto 10px auto
+
+  &:hover
+    color: $secondary-color
+    @include transition-bg-color(.3s)
+
+  &:focus
+    outline: none
+    color: $secondary-color
+    @include transition-bg-color(.3s)
