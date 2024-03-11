@@ -7,6 +7,7 @@ author "K4.dev"
 version "1.0.0"
 
 shared_scripts {
+	'@es_extended/imports.lua',
 	'shared/*.lua'
 }
 
@@ -16,4 +17,13 @@ client_scripts {
 
 server_scripts {
 	'server/*.lua'
+}
+
+ui_page 'nui/index.html'
+
+files {
+    'nui/index.html',
+    'nui/script.js',
+	'nui/style.css',
+	'nui/images/*.png'
 }
