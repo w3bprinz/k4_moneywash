@@ -7,13 +7,26 @@ author "K4.dev"
 version "1.0.0"
 
 shared_scripts {
-	'shared/*.lua'
+	'@es_extended/imports.lua',
+	'shared/*.lua',
+	'@es_extended/locale.lua',
 }
 
 client_scripts {
-	'client/*.lua'
+	'client/*.lua',
+	'locales/*.lua'	
 }
 
 server_scripts {
-	'server/*.lua'
+	'server/*.lua',
+	'locales/*.lua'
+}
+
+ui_page 'nui/index.html'
+
+files {
+    'nui/index.html',
+    'nui/script.js',
+	'nui/style.css',
+	'nui/images/*.png'
 }
