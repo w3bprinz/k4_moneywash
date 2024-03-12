@@ -31,6 +31,10 @@ Config.Blue                 = 2061822
 Config.Purple               = 11750815
 
 
-function k4_Notify (source, msg, msgType, time)
-    TriggerClientEvent('esx:showNotification', source, 'Verpiss Dich, Du hast keine Kohle.', msgType, time)
+function k4_NotifyServer (source, msg, msgType, time)
+    TriggerClientEvent('esx:showNotification', source, msg, msgType, time)
+end
+
+function k4_NotifyClient(msg, time, msgType)
+    ESX.ShowNotification(msg, time, msgType)
 end

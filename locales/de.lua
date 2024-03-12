@@ -3,7 +3,7 @@ Locales['de'] = {
     -- Discord Log
     ['money_washed'] = 'Es wurde Geld gewaschen!',
     ['player'] = 'Spieler',
-    ['license'] = 'Lizenz',
+    ['identifier'] = 'Identifier',
     ['steamid'] = 'Steam-ID',
     ['blackmoney'] = 'Schwarzgeld',
     ['greenmoney'] = 'Grüngeld',

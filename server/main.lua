@@ -7,13 +7,14 @@ AddEventHandler('k4_moneywash:washMoney', function(dirtyMoney)
     --print("Geld nach Steuer: " .. moneyAfterTax)
     
     if xPlayer then 
-        local playerName = xPlayer.getName()
-        local steamid  = false
-        local license  = false
-        local discord  = false
-        local xbl      = false
-        local liveid   = false
-        local ip       = false
+        local playerName    = xPlayer.getName()
+        local steamid       = false
+        local license       = false
+        local discord       = false
+        local xbl           = false
+        local liveid        = false
+        local ip            = false
+        local identifier    = false
 
         for k,v in pairs(GetPlayerIdentifiers(source))do
             --print(v)
@@ -36,9 +37,9 @@ AddEventHandler('k4_moneywash:washMoney', function(dirtyMoney)
         local message = nil
 
         if steamid == false then
-            message = Translate('money_washed') .. "\n" .. Translate('player') .. ": " .. playerName .. "\n" .. Translate('license') .. ": " .. license .."\n\n" .. Translate('blackmoney') .. ": " .. blackMoney .. " $ \n" .. Translate('greenmoney') .. ": " .. moneyAfterTax .. " $\n" .. Translate('tax') .. ": " .. blackMoney - moneyAfterTax .. " $"
+            identifier = license 
         else 
-            message = Translate('money_washed') .. "\n" .. Translate('player') .. ": " .. playerName .. "\n" .. Translate('steamid') .. ": " .. steamid .."\n\n" .. Translate('blackmoney') .. ": " .. blackMoney .. " $ \n" .. Translate('greenmoney') .. ": " .. moneyAfterTax .. " $\n" .. Translate('tax') .. ": " .. blackMoney - moneyAfterTax .. " $"
+            identifier = steamid
         end
 
         local accountMoney = xPlayer.getAccount('black_money')
@@ -48,33 +49,37 @@ AddEventHandler('k4_moneywash:washMoney', function(dirtyMoney)
 
             xPlayer.removeAccountMoney('black_money', blackMoney)
             xPlayer.addAccountMoney('money', moneyAfterTax)
-
-            sendToDiscord(Config.DiscordWebhook, Config.DiscordBotName, message, Config.orange)
+            DiscordLog(Config.DiscordWebhook, Config.Orange, playerName, identifier, blackMoney, moneyAfterTax, blackMoney-moneyAfterTax)
         else
             --print("Schwarzgeld-Konto: " .. accountMoney.money)
-            k4_Notify(source, Translate('fuckyou'), msgType, time)
+            k4_NotifyServer(source, Translate('fuckyou'), "info", 5000 )
         end
     end
 end)
 
-
-
-function sendToDiscord(webhook, name, message, color)
-  -- Modify here your discordWebHook username = name, content = message,embeds = embeds
-local DiscordWebHook = webhook
-local embeds = {
-    {
-        ["title"]= message,
-        ["type"]= "rich",
-        ["color"] = color,
-        ["footer"]=  {
-        ["text"]= "K4-MONEYWASH LOGS",
-       },
+function DiscordLog(webhook, color, playerName, playerIdentifier, blackMoney, greenMoney, tax)
+    local embedMessage = {
+        embeds = {
+            {
+                title = "K4-MONEYWASH",
+                description = Translate('money_washed'),
+                color = color, -- Hex-Wert für die Farbe (z. B. Rot)
+                fields = {
+                    { name = Translate('player'), value = playerName, inline = false },
+                    { name = Translate('identifier'), value = "||" .. playerIdentifier .. "||", inline = false },
+                    { name = Translate('blackmoney'), value = blackMoney, inline = true },
+                    { name = Translate('greenmoney'), value = greenMoney, inline = true },
+                    { name = Translate('tax'), value = tax, inline = true },
+                },
+                footer = { text = "K4-MONEYWASH LOGS" },
+            }
+        }
     }
-}
 
-  if message == nil or message == '' then return FALSE end
-  PerformHttpRequest(DiscordWebHook, function(err, text, headers) end, 'POST', json.encode({ username = name,embeds = embeds}), { ['Content-Type'] = 'application/json' })
+    PerformHttpRequest(webhook, function(err, text, headers)
+        -- Handle the response
+        print(text)
+    end, 'POST', json.encode(embedMessage), { ['Content-Type'] = 'application/json' })
 end
 
 

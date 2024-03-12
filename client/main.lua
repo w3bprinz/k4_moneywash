@@ -50,7 +50,7 @@ function checkPlayerJob(playerData)
     for _, job in ipairs(Config.Factions) do
         if playerData.job.name == job then 
             hasJob = true
-            print("Player hat den richtigen job!")
+            --print("Player hat den richtigen job!")
             break
         end
     end
@@ -84,13 +84,13 @@ end)
 RegisterNetEvent('k4_moneywash:openLaundry')
 AddEventHandler('k4_moneywash:openLaundry', function()
     local PlayerData = ESX.GetPlayerData()
-    print("Playerjob: " .. PlayerData.job.name)
+    --print("Playerjob: " .. PlayerData.job.name)
     if Config.FactionOnly == true then
         --print("Nur Fraktionen!")
         if checkPlayerJob(PlayerData) == true then
             TriggerEvent("showMoneywashUI")
         else
-            ESX.ShowNotification(Translate('wrong_job'), 5000, "info")
+            k4_NotifyClient(Translate('wrong_job'), 5000, "info")
         end
     else 
         TriggerEvent("showMoneywashUI")
